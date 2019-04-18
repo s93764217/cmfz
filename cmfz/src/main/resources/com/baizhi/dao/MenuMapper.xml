@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.MenuMapper">
+    <resultMap id="menuResultMap" type="Menu">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="jsp_url" property="jsp_url"/>
+        <collection property="menus" ofType="Menu" javaType="ArrayList">
+            <result column="pid" property="id"/>
+            <result column="ptitle" property="title"/>
+            <result column="pjsp_url" property="jsp_url"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryAll" resultMap="menuResultMap">
+        SELECT t1.*,t2.id pid, t2.title ptitle, t2.jsp_url pjsp_url from menu t1
+        LEFT JOIN menu t2
+        ON t1.id = t2.parent_id
+        where t1.parent_id IS NULL
+    </select>
+</mapper>
