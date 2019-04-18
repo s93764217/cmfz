@@ -56,7 +56,7 @@
                 $("#tt").tabs("add", {
                     title: child.title,
                     closable: true,
-                    href: "${pageContext.request.contextPath}/jsp/banner/banner.jsp"
+                    href: "${pageContext.request.contextPath}/jsp/" + child.jsp_url
                 })
             }
         }
