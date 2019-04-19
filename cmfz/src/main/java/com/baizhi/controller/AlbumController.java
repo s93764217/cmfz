@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Controller
@@ -65,13 +65,14 @@ public class AlbumController {
         try {
             map = new HashMap();
             String fileName = file1.getOriginalFilename();
+            String downloadPath = UUID.randomUUID().toString().replaceAll("-", "") +
+                    fileName.substring(fileName.lastIndexOf("."));
             String filePath = "D:/cmfz/cmfz/src/main/webapp/jsp/album/mp3/";
-            File dest = new File(filePath + fileName);
+            File dest = new File(filePath + downloadPath);
             file1.transferTo(dest);
             Chapter chapter = new Chapter();
             chapter.setAlbumId(id);
-            chapter.setDownloadPath(UUID.randomUUID().toString().replaceAll("-", "") +
-                    fileName.substring(fileName.lastIndexOf(".")));
+            chapter.setDownloadPath(downloadPath);
             chapter.setPublishDate(new Date());
             chapter.setTitle(ctitle);
             chapter.setDuration(AudioUtil.getDuration(dest));
@@ -87,14 +88,15 @@ public class AlbumController {
     }
 
     @RequestMapping("downloadFile")
-    public void downloadFile(HttpServletRequest request, HttpServletResponse response, String fileName, String title) {
+    public void downloadFile(HttpServletResponse response, String fileName, String title) throws UnsupportedEncodingException {
         if (fileName != null) {
             //设置文件路径
             String realPath = "D:/cmfz/cmfz/src/main/webapp/jsp/album/mp3/";
             File file = new File(realPath, fileName);
             if (file.exists()) {
                 response.setContentType("application/force-download");// 设置强制下载不打开
-                response.addHeader("Content-Disposition", "attachment;fileName=" + title + fileName.substring(fileName.lastIndexOf(".")));// 设置文件名
+                String encode = URLEncoder.encode(title, "UTF-8");
+                response.addHeader("content-disposition", "attachment;fileName=" + encode);// 设置文件名
                 byte[] buffer = new byte[1024];
                 FileInputStream fis = null;
                 BufferedInputStream bis = null;
@@ -129,5 +131,6 @@ public class AlbumController {
             }
         }
     }
+
 
 }
