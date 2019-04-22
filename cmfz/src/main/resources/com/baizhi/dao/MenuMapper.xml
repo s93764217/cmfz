@@ -13,7 +13,7 @@
         </collection>
     </resultMap>
 
-    <select id="queryAll" resultMap="menuResultMap">
+    <select id="queryAllMenu" resultMap="menuResultMap">
         SELECT t1.*,t2.id pid, t2.title ptitle, t2.jsp_url pjsp_url from menu t1
         LEFT JOIN menu t2
         ON t1.id = t2.parent_id

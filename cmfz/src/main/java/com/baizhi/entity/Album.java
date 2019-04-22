@@ -1,6 +1,8 @@
 package com.baizhi.entity;
 
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +22,7 @@ import java.util.List;
 public class Album {
     @Id
     private String id;
+    @Excel(name = "专辑名称", needMerge = true)
     private String title;
     private Integer amount;
     private String imgPath;
@@ -32,6 +35,7 @@ public class Album {
     private String introduction;
 
     @Transient
+    @ExcelCollection(name = "章节详情")
     private List<Chapter> children;
 
 }

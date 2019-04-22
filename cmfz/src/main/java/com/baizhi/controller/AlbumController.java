@@ -1,18 +1,24 @@
 package com.baizhi.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.baizhi.entity.Album;
 import com.baizhi.entity.Chapter;
 import com.baizhi.service.AlbumService;
 import com.baizhi.util.AudioUtil;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -96,7 +102,7 @@ public class AlbumController {
             if (file.exists()) {
                 response.setContentType("application/force-download");// 设置强制下载不打开
                 String encode = URLEncoder.encode(title, "UTF-8");
-                response.addHeader("content-disposition", "attachment;fileName=" + encode);// 设置文件名
+                response.addHeader("content-disposition", "attachment;fileName=" + encode + fileName.substring(fileName.lastIndexOf(".")));// 设置文件名
                 byte[] buffer = new byte[1024];
                 FileInputStream fis = null;
                 BufferedInputStream bis = null;
@@ -129,6 +135,41 @@ public class AlbumController {
                     }
                 }
             }
+        }
+    }
+
+    @GetMapping("/export")
+    public void export(HttpServletResponse response) {
+        List<Album> albums = (List<Album>) albumService.selectAllAlbum(1, 1000).get("rows");
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("专辑详情", "专辑"),
+                Album.class, albums);
+        try {
+            workbook.write(new FileOutputStream(new File("D:/easypoi.xlsx")));
+            export(response, workbook, "专辑详情");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * export导出请求头设置
+     *
+     * @param response
+     * @param workbook
+     * @param fileName
+     * @throws Exception
+     */
+    private static void export(HttpServletResponse response, Workbook workbook, String fileName) throws Exception {
+        response.reset();
+        response.setContentType("application/x-msdownload");
+        fileName = fileName + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes("gb2312"), "ISO-8859-1") + ".xls");
+        ServletOutputStream outStream = null;
+        try {
+            outStream = response.getOutputStream();
+            workbook.write(outStream);
+        } finally {
+            outStream.close();
         }
     }
 

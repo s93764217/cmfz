@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserMapper">
+    <select id="selectAllUser" resultType="int">
+       select count(*) active_user from user where datediff(now(),register_time) &lt; #{time}
+    </select>
+
+    <!--    <select id="selectAllUserWithMap" resultMap="UserResultMap">-->
+    <!--        select count(*) number , province from user where sex = #{sex} group by province-->
+    <!--    </select>-->
+    <!--    <resultMap id="UserResultMap" type="UserDTO">-->
+    <!--        <result column="number" property="value"/>-->
+    <!--        <result column="province" property="name"/>-->
+    <!--    </resultMap>-->
+    <select id="selectWithMap" resultMap="userMap">
+        select count(*) number , province from user where sex = #{sex} group by province
+    </select>
+    <resultMap id="userMap" type="UserVO">
+        <result column="number" property="value"/>
+        <result column="province" property="name"/>
+    </resultMap>
+
+</mapper>

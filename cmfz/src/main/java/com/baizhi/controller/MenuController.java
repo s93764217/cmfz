@@ -21,7 +21,7 @@ public class MenuController {
     public @ResponseBody
     Map queryAll() {
         Map map = new HashMap();
-        map.put("menus", menuService.queryAll());
+        map.put("menus", menuService.queryAllMenu());
         return map;
     }
 

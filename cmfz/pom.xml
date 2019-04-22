@@ -75,11 +75,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.56</version>
         </dependency>
+        <!--分页插件-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>4.1.6</version>
         </dependency>
+        <!--本地jar，音频jar-->
         <dependency>
             <groupId>com.baizhi</groupId>
             <artifactId>cmfz</artifactId>
@@ -87,6 +89,24 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/jave-1.0.2.jar</systemPath>
         </dependency>
+        <!-- esaypoi -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

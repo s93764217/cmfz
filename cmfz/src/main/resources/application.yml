@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8088
   context-path: /cmfz
   jsp-servlet:
     init-parameters:

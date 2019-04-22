@@ -2,43 +2,46 @@
 <script>
     $(function () {
 
-        var tb = [{
-            iconCls: 'icon-tip',
-            text: '专辑详情',
-            handler: function () {
-                $("#detailDialog").dialog("open");
-                showdetails();
+        /*  var tb = [{
+              iconCls: 'icon-tip',
+              text: '专辑详情',
+              handler: function () {
+                  $("#detailDialog").dialog("open");
+                  showdetails();
 
-            }
-        }, '-', {
-            iconCls: 'icon-add',
-            text: '添加专辑',
-            handler: function () {
-                $("#dd_Album").dialog("open");
-            }
-        }, '-', {
-            iconCls: 'icon-add',
-            text: '添加章节',
-            handler: function () {
-                $("#dd_chapter").dialog("open");
-            }
-        }, '-', {
-            iconCls: 'icon-save',
-            text: '下载音频',
-            handler: function () {
-                exportFile();
-            }
-        }];
+              }
+          }, '-', {
+              iconCls: 'icon-add',
+              text: '添加专辑',
+              handler: function () {
+                  $("#dd_Album").dialog("open");
+              }
+          }, '-', {
+              iconCls: 'icon-add',
+              text: '添加章节',
+              handler: function () {
+                  $("#dd_chapter").dialog("open");
+              }
+          }, '-', {
+              iconCls: 'icon-save',
+              text: '下载音频',
+              handler: function () {
+                  exportFile();
+              }
+          }];*/
 
         $('#tt_album').treegrid({
             //后台Controller查询所有专辑以及对应的章节集合
             url: '${pageContext.request.contextPath}/album/selectAllAlbum',
             idField: 'id',//用来标识标识树节点   主干树与分支树节点  ID不能有相同  并且使用相同的字段  否则ID冲突
             treeField: 'title',//用来定义树节点   树形表格上要展示的信息   注意使用相同的字段 用来展示对应节点名称
-            toolbar: tb,
+            toolbar: "#albumToolBar",
             pagination: true,
             fit: true,
             fitColumns: true,
+            onDblClickRow: function (row) {
+                audioPlay(row);
+            },
             columns: [[
                 {field: 'title', title: '名字', width: 180},
                 {field: 'downloadPath', title: '下载路径', width: 60},
@@ -54,6 +57,29 @@
             title: '详情页'
         })
     })
+
+    function detailclick() {
+        $("#detailDialog").dialog("open");
+        showdetails();
+    }
+
+    function addalbumclick() {
+        $("#dd_Album").dialog("open");
+    }
+
+    function addchapterclick() {
+        $("#dd_chapter").dialog("open");
+    }
+
+    function downloadclick() {
+        exportFile();
+    }
+
+    function audioPlay(row) {
+        var audio = document.getElementById("chapterplayer");
+        audio.src = '${pageContext.request.contextPath}/jsp/album/mp3/' + row.downloadPath;
+        audio.play();
+    }
 
     function addAlbum() {
         $('#ff_album').form('submit', {
@@ -110,8 +136,24 @@
         var file = $('#tt_album').treegrid("getSelected");
         window.location.href = "${pageContext.request.contextPath}/album/downloadFile?fileName=" + file.downloadPath + "&title=" + file.title;
     }
+
+    function exportAlbum() {
+        window.location.href = "${pageContext.request.contextPath}/album/export";
+    }
 </script>
 <table id="tt_album" style="width:600px;height:400px"></table>
+<div id="albumToolBar">
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="detailclick()">专辑详情</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"
+       onclick="addalbumclick()">添加专辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"
+       onclick="addchapterclick()">添加章节</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"
+       onclick="downloadclick()">下载音频</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"
+       onclick="exportAlbum()">导出到Excel</a>
+    <audio src="" controls id="chapterplayer"></audio>
+</div>
 <div id="detailDialog">
     <form id="detailForm">
         专辑名称：<input type="text" name="title" readonly><br/>
