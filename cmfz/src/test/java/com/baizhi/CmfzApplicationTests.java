@@ -7,6 +7,7 @@ import com.baizhi.dao.MenuMapper;
 import com.baizhi.dao.UserMapper;
 import com.baizhi.entity.Album;
 import com.baizhi.entity.Menu;
+import com.baizhi.service.AlbumService;
 import com.baizhi.service.BannerService;
 import com.baizhi.service.UserService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -57,10 +58,12 @@ public class CmfzApplicationTests {
 
     @Autowired
     private AlbumMapper albumMapper;
+    @Autowired
+    private AlbumService albumService;
 
     @Test
     public void testAlbum() {
-        List<Album> albums = albumMapper.selectAllAlbum();
+        List<Album> albums = albumService.selectAllAlbum();
         for (Album album : albums) {
             System.out.println("album = " + album);
         }

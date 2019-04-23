@@ -17,9 +17,9 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @RequestMapping("/queryAll")
+    @RequestMapping("/queryAllMenu")
     public @ResponseBody
-    Map queryAll() {
+    Map queryAllMenu() {
         Map map = new HashMap();
         map.put("menus", menuService.queryAllMenu());
         return map;

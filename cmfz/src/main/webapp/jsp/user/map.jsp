@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/echarts.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/china.js"></script>
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="activeUser_map" style="width: 100%;height: 100%;margin-top: 30px;margin-left: 30px">
@@ -31,8 +27,7 @@
             data: ['男', '女']
         },
         visualMap: {
-            min: 0,
-            max: 2500,
+
             left: 'left',
             top: 'bottom',
             text: ['高', '低'],           // 文本，默认为数值文本

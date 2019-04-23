@@ -2,6 +2,7 @@ package com.baizhi.service.impl;
 
 
 import com.baizhi.dao.UserMapper;
+import com.baizhi.entity.User;
 import com.baizhi.entity.UserVO;
 import com.baizhi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int selectAllUser(int time) {
         return userMapper.selectAllUser(time);
+    }
+
+    @Override
+    public void register(User user) {
+        userMapper.insert(user);
     }
 
     @Override

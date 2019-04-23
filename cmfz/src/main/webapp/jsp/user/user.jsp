@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/echarts.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="activeUser_bar" style="width: 600px;height: 400px;;margin-top: 30px;margin-left: 30px"></div>
 
@@ -15,8 +12,7 @@
     // 异步加载统计信息
     $.post("${pageContext.request.contextPath }/user/selectAllUserByBar", function (data) {
         console.log(data);
-
-
+        console.log(data.intervals);
         // 指定图表的配置项和数据
         var option = {
             title: {
@@ -38,7 +34,7 @@
         };
 
         myChart.setOption(option);
-    }, "json");
+    }, "JSON");
 
 
 </script>

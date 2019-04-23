@@ -23,11 +23,12 @@ public class UserController {
     @ResponseBody
     public Map selectAllUserByBar() {
         Map<String, Object> map = new HashMap<>();
-        map.put("intervals", new String[]{"7天", "15天", "21天"});
+
         int num1 = userService.selectAllUser(7);
         int num2 = userService.selectAllUser(14);
         int num3 = userService.selectAllUser(21);
         map.put("counts", new int[]{num1, num2, num3});
+        map.put("intervals", new String[]{"过去一周", "过去两周", "过去三周"});
         return map;
     }
 

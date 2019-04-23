@@ -5,7 +5,7 @@
 <mapper namespace="com.baizhi.dao.AlbumMapper">
 
     <select id="selectAllAlbum" resultMap="albumResultMap">
-        SELECT t1.*,t2.id cid, t2.title ctitle, t2.size, t2.duration, t2.publish_date,t2.download_path,t2.album_id
+        SELECT t1.*,t2.id cid,t2.title c1title,t2.size, t2.duration, t2.publish_date,t2.download_path,t2.album_id
         FROM album t1
         LEFT JOIN chapter t2
         ON t1.id = t2.album_id
@@ -23,7 +23,7 @@
         <result column="introduction" property="introduction"/>
         <collection property="children" javaType="ArrayList" ofType="Chapter">
             <result column="cid" property="id"/>
-            <result column="ctitle" property="title"/>
+            <result column="c1title" property="title"/>
             <result column="size" property="size"/>
             <result column="duration" property="duration"/>
             <result column="publish_date" property="publishDate"/>

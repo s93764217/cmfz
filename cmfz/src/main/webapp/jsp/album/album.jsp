@@ -36,7 +36,7 @@
             idField: 'id',//用来标识标识树节点   主干树与分支树节点  ID不能有相同  并且使用相同的字段  否则ID冲突
             treeField: 'title',//用来定义树节点   树形表格上要展示的信息   注意使用相同的字段 用来展示对应节点名称
             toolbar: "#albumToolBar",
-            pagination: true,
+            // pagination: true,
             fit: true,
             fitColumns: true,
             onDblClickRow: function (row) {
@@ -58,10 +58,6 @@
         })
     })
 
-    function detailclick() {
-        $("#detailDialog").dialog("open");
-        showdetails();
-    }
 
     function addalbumclick() {
         $("#dd_Album").dialog("open");
@@ -120,16 +116,18 @@
 
     function showdetails() {
         var a = $('#tt_album').treegrid("getSelected");
-
         if (a == null) {
             alert("请至少选中一个专辑");
         } else {
+
             if (a.albumId != null) {
                 var id = a.albumId;
                 a = $('#tt_album').treegrid("find", id);
             }
+            $("#detailDialog").dialog("open");
+            $("#detailForm").form("load", a);
         }
-        $("#detailForm").form("load", a);
+
     }
 
     function exportFile() {
@@ -143,7 +141,8 @@
 </script>
 <table id="tt_album" style="width:600px;height:400px"></table>
 <div id="albumToolBar">
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="detailclick()">专辑详情</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"
+       onclick="showdetails()">专辑详情</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"
        onclick="addalbumclick()">添加专辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"
