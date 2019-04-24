@@ -1,5 +1,6 @@
 package com.baizhi.entity;
 
+
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,31 +10,22 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
-public class User {
+@Table(name = "article")
+public class Article {
     @Id
     @KeySql(useGeneratedKeys = true)
     private Integer id;
-    private String name;
+    private String title;
+    private String content;
+    @JSONField(format = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date publishDate;
+    @Transient
     private String dharma;
-    private Integer sex;
-    private String province;
-    private String city;
-    private String sign;
-    private String phone;
-    private Integer status;
-    private String salt;
-    private String headImg;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date registerTime;
-    private String password;
-    private Integer guruId;
-    private Guru guru;
-
 }

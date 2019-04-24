@@ -36,7 +36,7 @@
             idField: 'id',//用来标识标识树节点   主干树与分支树节点  ID不能有相同  并且使用相同的字段  否则ID冲突
             treeField: 'title',//用来定义树节点   树形表格上要展示的信息   注意使用相同的字段 用来展示对应节点名称
             toolbar: "#albumToolBar",
-            // pagination: true,
+            pagination: true,
             fit: true,
             fitColumns: true,
             onDblClickRow: function (row) {

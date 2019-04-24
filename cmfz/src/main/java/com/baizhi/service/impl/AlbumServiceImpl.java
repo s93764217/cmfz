@@ -5,10 +5,14 @@ import com.baizhi.dao.ChapterMapper;
 import com.baizhi.entity.Album;
 import com.baizhi.entity.Chapter;
 import com.baizhi.service.AlbumService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
@@ -20,14 +24,13 @@ public class AlbumServiceImpl implements AlbumService {
     private ChapterMapper chapterMapper;
 
     @Override
-    public List<Album> selectAllAlbum() {
-        /*Map map = new HashMap();
-        PageHelper.startPage(page, size);
+    public Map selectAllAlbum(int page, int rows) {
+        Map map = new HashMap();
+        PageHelper.startPage(page, rows);
         PageInfo<Album> pageInfo = new PageInfo<>(albumMapper.selectAllAlbum());
         map.put("rows", pageInfo.getList());
-        map.put("total", pageInfo.getTotal());*/
-        System.err.println("album in service");
-        return albumMapper.selectAllAlbum();
+        map.put("total", pageInfo.getTotal());
+        return map;
     }
 
     @Override

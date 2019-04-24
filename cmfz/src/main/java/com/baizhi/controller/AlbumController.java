@@ -30,9 +30,8 @@ public class AlbumController {
 
     @RequestMapping("selectAllAlbum")
     public @ResponseBody
-    List<Album> selectAllAlbum() {
-        System.err.println("album in controller");
-        return albumService.selectAllAlbum();
+    Map selectAllAlbum(int page, int rows) {
+        return albumService.selectAllAlbum(page, rows);
     }
 
     @RequestMapping("insert")
@@ -141,7 +140,7 @@ public class AlbumController {
 
     @GetMapping("/export")
     public void export(HttpServletResponse response) {
-        List<Album> albums = albumService.selectAllAlbum();
+        List<Album> albums = (List<Album>) albumService.selectAllAlbum(1, 100000).get("rows");
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("专辑详情", "专辑"),
                 Album.class, albums);
         try {

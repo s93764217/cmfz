@@ -1,6 +1,7 @@
 package com.baizhi.controller;
 
 
+import com.baizhi.entity.User;
 import com.baizhi.entity.UserVO;
 import com.baizhi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,20 @@ public class UserController {
     @RequestMapping("selectWithMap")
     @ResponseBody
     public List<UserVO> selectWithMap(int sex) {
+
         return userService.selectWithMap(sex);
+    }
+
+    @RequestMapping("register")
+    @ResponseBody
+    public Map register(User user) {
+        return userService.insert(user);
+    }
+
+    @RequestMapping("selectAll")
+    @ResponseBody
+    public Map selectAll(int page, int rows) {
+        return userService.selectAll(page, rows);
     }
 
 }

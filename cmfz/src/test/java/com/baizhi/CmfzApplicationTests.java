@@ -3,13 +3,16 @@ package com.baizhi;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.baizhi.dao.AlbumMapper;
+import com.baizhi.dao.ArticleMapper;
 import com.baizhi.dao.MenuMapper;
 import com.baizhi.dao.UserMapper;
 import com.baizhi.entity.Album;
+import com.baizhi.entity.Article;
 import com.baizhi.entity.Menu;
 import com.baizhi.service.AlbumService;
 import com.baizhi.service.BannerService;
 import com.baizhi.service.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -57,13 +60,24 @@ public class CmfzApplicationTests {
     }
 
     @Autowired
+    private ArticleMapper articleMapper;
+
+    @Test
+    public void TestArticle() {
+        List<Article> articles = articleMapper.selectArticleByUid(1);
+        for (Article article : articles) {
+            System.out.println("article = " + article);
+        }
+    }
+
+    @Autowired
     private AlbumMapper albumMapper;
     @Autowired
     private AlbumService albumService;
 
     @Test
     public void testAlbum() {
-        List<Album> albums = albumService.selectAllAlbum();
+        List<Album> albums = (List<Album>) albumService.selectAllAlbum(1, 10000).get("rows");
         for (Album album : albums) {
             System.out.println("album = " + album);
         }
@@ -195,4 +209,13 @@ public class CmfzApplicationTests {
         }
     }
 */
+@Test
+public void TestMD5() {
+    String password = "stf158874";
+    String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(3, 8);
+    String s = DigestUtils.md5Hex(password + salt);
+    System.out.println("salt = " + salt);
+    System.out.println("s = " + s);
+    System.out.println(UUID.randomUUID().toString().replaceAll("-", ""));
+}
 }

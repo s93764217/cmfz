@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleMapper">
+
+    <select id="selectArticleByUid" resultType="Article">
+        select t1.id,t1.title,t1.content,t1.publish_date,t2.dharma from (
+            select id,title,content,publish_date,guru_id from article where guru_id = (
+                SELECT guru_id from user where id=#{uid})) t1
+        LEFT JOIN guru t2
+        ON t1.guru_id = t2.id
+    </select>
+
+
+</mapper>
