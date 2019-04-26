@@ -25,12 +25,13 @@ public class Album {
     @Excel(name = "专辑名称", needMerge = true)
     private String title;
     private Integer amount;
+    @Excel(name = "封面", width = 40, needMerge = true, type = 2)
     private String imgPath;
     private Integer score;
     private String author;
     private String announcer;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
     private String introduction;
 

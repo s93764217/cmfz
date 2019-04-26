@@ -158,64 +158,71 @@ public class CmfzApplicationTests {
             e.printStackTrace();
         }
     }
-/*  @Test
-    public void testPOI() {
-        //创建工作簿
-        Workbook workbook = new HSSFWorkbook();
-        //创建字体
-        Font font = workbook.createFont();
-        font.setBold(true);
-        font.setFontName("楷体");
-        font.setItalic(true);
-        font.setColor(Font.COLOR_RED);
-        //创建日期格式
-        DataFormat dataFormat = workbook.createDataFormat();
-        short format = dataFormat.getFormat("yyyy年MM月dd日");
-        //创建样式
-        CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(font);
-        cellStyle.setAlignment(HorizontalAlignment.CENTER);
-        //创建日期格式的样式
-        CellStyle cellStyle1 = workbook.createCellStyle();
-        cellStyle1.setDataFormat(format);
-        //创建工作表
-        Sheet sheet = workbook.createSheet("user");
-        //第一个参数给那个列设置宽度  下标   第二个参数  宽度设置为多少  需要乘以256
-        sheet.setColumnWidth(3,20*256);
-        //编号  名字   生日
-        String[] strings = {"编号","名字","年龄","生日"};
-        //创建行  参数第几行  下标
-        Row row = sheet.createRow(0);
-        for (int i = 0; i < strings.length; i++) {
-            //创建单元格
-            Cell cell = row.createCell(i);
-            cell.setCellStyle(cellStyle);
-            //单元格赋值
-            cell.setCellValue(strings[i]);
+
+    /*  @Test
+        public void testPOI() {
+            //创建工作簿
+            Workbook workbook = new HSSFWorkbook();
+            //创建字体
+            Font font = workbook.createFont();
+            font.setBold(true);
+            font.setFontName("楷体");
+            font.setItalic(true);
+            font.setColor(Font.COLOR_RED);
+            //创建日期格式
+            DataFormat dataFormat = workbook.createDataFormat();
+            short format = dataFormat.getFormat("yyyy年MM月dd日");
+            //创建样式
+            CellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setFont(font);
+            cellStyle.setAlignment(HorizontalAlignment.CENTER);
+            //创建日期格式的样式
+            CellStyle cellStyle1 = workbook.createCellStyle();
+            cellStyle1.setDataFormat(format);
+            //创建工作表
+            Sheet sheet = workbook.createSheet("user");
+            //第一个参数给那个列设置宽度  下标   第二个参数  宽度设置为多少  需要乘以256
+            sheet.setColumnWidth(3,20*256);
+            //编号  名字   生日
+            String[] strings = {"编号","名字","年龄","生日"};
+            //创建行  参数第几行  下标
+            Row row = sheet.createRow(0);
+            for (int i = 0; i < strings.length; i++) {
+                //创建单元格
+                Cell cell = row.createCell(i);
+                cell.setCellStyle(cellStyle);
+                //单元格赋值
+                cell.setCellValue(strings[i]);
+            }
+            for (int i = 0; i < 10; i++) {
+                Row row1 = sheet.createRow(i + 1);
+                row1.createCell(0).setCellValue("张三"+i);
+                row1.createCell(1).setCellValue(i);
+                row1.createCell(2).setCellValue(i);
+                Cell cell = row1.createCell(3);
+                cell.setCellStyle(cellStyle1);
+                cell.setCellValue(new Date());
+            }
+            try {
+                workbook.write(new FileOutputStream(new File("D:/bxy.xls")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        for (int i = 0; i < 10; i++) {
-            Row row1 = sheet.createRow(i + 1);
-            row1.createCell(0).setCellValue("张三"+i);
-            row1.createCell(1).setCellValue(i);
-            row1.createCell(2).setCellValue(i);
-            Cell cell = row1.createCell(3);
-            cell.setCellStyle(cellStyle1);
-            cell.setCellValue(new Date());
-        }
-        try {
-            workbook.write(new FileOutputStream(new File("D:/bxy.xls")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    */
+    @Test
+    public void TestMD5() {
+        String password = "stf158874";
+        String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(3, 8);
+        String s = DigestUtils.md5Hex(password + salt);
+        System.out.println("salt = " + salt);
+        System.out.println("s = " + s);
+        System.out.println(UUID.randomUUID().toString().replaceAll("-", ""));
     }
-*/
-@Test
-public void TestMD5() {
-    String password = "stf158874";
-    String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(3, 8);
-    String s = DigestUtils.md5Hex(password + salt);
-    System.out.println("salt = " + salt);
-    System.out.println("s = " + s);
-    System.out.println(UUID.randomUUID().toString().replaceAll("-", ""));
-}
+
+    @Test
+    public void TestLucene() {
+
+    }
+
 }

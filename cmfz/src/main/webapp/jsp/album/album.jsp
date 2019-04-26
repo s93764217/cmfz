@@ -111,7 +111,10 @@
                 }
             }
         });
+    }
 
+    function closeChapter() {
+        $("#dd_chapter").dialog("close");
     }
 
     function showdetails() {
@@ -125,6 +128,7 @@
                 a = $('#tt_album').treegrid("find", id);
             }
             $("#detailDialog").dialog("open");
+            $("#albumImg").prop("src", "${pageContext.request.contextPath}/jsp/album/img/" + a.imgPath);
             $("#detailForm").form("load", a);
         }
 
@@ -162,6 +166,7 @@
         专辑播音：<input type="text" name="announcer" readonly><br/>
         上传时间：<input type="date" name="releaseDate" readonly><br/>
         图片路径：<input type="text" name="imgPath" readonly><br/>
+        封面：<img id="albumImg" style="width: 300px;height: 250px;" src=""/><br>
         专辑简介：<textarea name="introduction" readonly style="height: 100px;width: 250px"></textarea>
     </form>
 </div>

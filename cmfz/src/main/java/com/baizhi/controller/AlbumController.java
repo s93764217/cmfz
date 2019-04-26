@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -139,8 +140,12 @@ public class AlbumController {
     }
 
     @GetMapping("/export")
-    public void export(HttpServletResponse response) {
+    public void export(HttpServletResponse response, HttpSession session) {
+        System.err.println(session.getServletContext().getRealPath("/jsp/album/img/"));
         List<Album> albums = (List<Album>) albumService.selectAllAlbum(1, 100000).get("rows");
+        for (Album album : albums) {
+            album.setImgPath(session.getServletContext().getRealPath("/jsp/album/img/") + album.getImgPath());
+        }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("专辑详情", "专辑"),
                 Album.class, albums);
         try {
@@ -171,6 +176,4 @@ public class AlbumController {
             outStream.close();
         }
     }
-
-
 }
